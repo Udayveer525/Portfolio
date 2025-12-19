@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <script defer src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
+    <script defer src="https://files.bpcontent.cloud/2024/10/24/13/20241024135658-PS2FE5IS.js"></script>
+    
+    <title>Portfolio</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #0f172a;
+        color: #fff;
+        overflow-x: hidden;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 2rem;
+        position: relative;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #38bdf8;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      .navbar {
+        display: flex;
+        gap: 1.5rem;
+      }
+
+      .navbar a {
+        text-decoration: none;
+        color: #fff;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      .navbar a:hover {
+        color: #38bdf8;
+      }
+
+      .hero {
+        background: linear-gradient(135deg, #1e293b, #0f172a);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh; /* Full screen height */
+        position: relative; /* To position the canvas correctly */
+        overflow: hidden; /* Prevent canvas overflow */
+      }
+
+      .hero-content {
+        z-index: 1; /* Place content above the canvas */
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .hero .btn {
+        background-color: #38bdf8;
+        color: #fff;
+        border: none;
+        border-radius: 25px;
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .hero .btn:hover {
+        background-color: #0284c7;
+      }
+
+      /* About Section */
+      .about {
+        padding: 4rem 2rem;
+        text-align: center;
+        background: #0f172a;
+      }
+
+      .about h2 {
+        font-size: 2.5rem;
+        color: #38bdf8;
+        margin-bottom: 1rem;
+      }
+
+      .about p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+        color: #94a3b8;
+      }
+
+      .interests {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .interest {
+        padding: 0.5rem 1rem;
+        background-color: #1e293b;
+        color: #38bdf8;
+        border-radius: 20px;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      .resume-btn {
+        padding: 0.8rem 1.5rem;
+        background-color: #38bdf8;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+      }
+
+      .resume-btn:hover {
+        background-color: #0284c7;
+      }
+
+      /* Projects Section */
+      .projects {
+        padding: 4rem 2rem;
+        background: #0f172a;
+        text-align: center;
+      }
+
+      .projects h2 {
+        font-size: 2.5rem;
+        color: #38bdf8;
+        margin-bottom: 1rem;
+      }
+
+      .section-description {
+        color: #94a3b8;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+      }
+
+      .project-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        justify-items: center;
+      }
+
+      .project-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+      }
+
+      .project-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+      }
+
+      .project-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: #fff;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .project-overlay h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .project-overlay p {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        color: #94a3b8;
+      }
+
+      .project-overlay .btn {
+        margin: 0.5rem;
+        background-color: #38bdf8;
+        color: #fff;
+        border: none;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+      }
+
+      .project-overlay .btn:hover {
+        background-color: #0284c7;
+      }
+
+      .project-item:hover img {
+        transform: scale(1.1);
+      }
+
+      .project-item:hover .project-overlay {
+        opacity: 1;
+      }
+
+      /* Contact Section */
+      .contact {
+        padding: 4rem 2rem;
+        background: #0f172a;
+        text-align: center;
+        position: relative;
+      }
+
+      .contact h2 {
+        font-size: 2.5rem;
+        color: #38bdf8;
+        margin-bottom: 1rem;
+      }
+
+      .contact p {
+        color: #94a3b8;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+      }
+
+      .social-links a {
+        color: #94a3b8;
+        font-size: 2.5rem;
+        transition: transform 0.3s ease, color 0.3s ease;
+      }
+
+      .social-links a:hover {
+        transform: scale(1.3);
+        color: #38bdf8;
+      }
+
+      .contact-details {
+        margin-top: 2rem;
+        font-size: 1.2rem;
+        color: #94a3b8;
+      }
+
+      .contact-details span {
+        display: block;
+        margin: 0.5rem 0;
+      }
+
+      /* Footer Section */
+      .footer {
+        background: #1e293b;
+        color: #94a3b8;
+        padding: 2rem;
+        text-align: center;
+        margin-top: 3rem;
+      }
+
+      .footer-content p {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .footer-social {
+        margin-top: 1rem;
+      }
+
+      .footer-social a {
+        color: #94a3b8;
+        font-size: 1.5rem;
+        margin: 0 0.5rem;
+        transition: transform 0.3s ease, color 0.3s ease;
+      }
+
+      .footer-social a:hover {
+        transform: scale(1.2);
+        color: #38bdf8;
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Interactive Background */
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+      }
+
+      /* Larger screens (e.g., laptops and desktops) */
+      @media (min-width: 768px) {
+        .hero h1 {
+          font-size: 4rem; /* Bigger font size for headings */
+        }
+
+        .hero p {
+          font-size: 1.5rem;
+        }
+
+        .hero .btn {
+          font-size: 1.2rem;
+          padding: 1rem 2rem;
+        }
+      }
+
+      /* Smaller screens (e.g., smartphones) */
+      @media (max-width: 480px) {
+        .hero {
+          height: 80vh;
+        }
+
+        .disabled {
+          pointer-events: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <h1>Hi, I'm <span style="color: #38bdf8">Udayveer Singh</span></h1>
+        <p>A BCA student who loves programming and development</p>
+        <a href="#projects"><button class="btn">Explore My Work</button></a>
+      </div>
+      <canvas id="heroCanvas"></canvas>
+    </section>
+
+    <section class="about" id="about">
+      <h2>About Me</h2>
+      <p>
+        I am <span style="color: #38bdf8">Udayveer</span>, a passionate
+        programmer with a love for crafting innovative experiences. I have
+        completed my marticulation from
+        <span style="color: #38bdf8">Manav Mangal Smart School (84%)</span> and
+        +2 from <span style="color: #38bdf8">GMSS-33d (89%)</span>. I am
+        proficient in various languages and their frameworks and have a strong interest in AI-ML field.
+      </p>
+      <div class="interests">
+        <div class="interest">Web Development</div>
+        <div class="interest">App Development</div>
+        <div class="interest">API Integration</div>
+        <div class="interest">UI/UX Design</div>
+        <div class="interest">HTML, CSS, JavaScript</div>
+        <div class="interest">Java</div>
+        <div class="interest">Python</div>
+        <div class="interest">C, C++</div>
+        <div class="interest">Flutter</div>
+        <div class="interest">SQL</div>
+        <div class="interest">Firebase, Supabase</div>
+      </div>
+      <p>
+        Along with many other commonly used technologies like <span style="color: #38bdf8">Git and GitHub, Excel and PowerPoint, Canva and Photoshop.</span> I am always eager to learn new technologies and improve my skills.
+        Below is the link to my resume, where you can find more details about my education and experience.
+      </p>
+      <br />
+      <a href="Udayveer_resume.pdf" target="_blank" class="resume-btn">View Resume</a>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+      <h2>My Projects</h2>
+      <p class="section-description">
+        Here are some of my favourite projects I've worked on. Click to explore
+        more!
+      </p>
+      <div class="project-grid">
+        <!-- Project 1 -->
+        <div class="project-item">
+          <img src="Photos/Study Hub Owl.png" alt="Project 1" />
+          <div class="project-overlay" onclick="enableBtn(1)">
+            <h3>Study Hub</h3>
+            <p>
+              A responsive website that provides all the study material for exam
+              preparation.
+            </p>
+            <a
+              id="proBtn1"
+              href="https://project-study-hub.netlify.app/"
+              target="_blank"
+              class="btn disabled proBtn"
+              >View Live</a
+            >
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-item">
+          <img src="Photos/jarvisai.png" alt="Project 2" />
+          <div class="project-overlay" onclick="enableBtn(2)">
+            <h3>Jarvis AI</h3>
+            <p>API integrated chatbot made using Python.</p>
+            <a
+              id="proBtn2"
+              href="https://project-jarvis-ai.netlify.app/"
+              target="_blank"
+              class="btn disabled"
+              >View Live</a
+            >
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-item">
+          <img src="Photos/currency-converter.jpg" alt="Project 3" />
+          <div class="project-overlay" onclick="enableBtn(3)">
+            <h3>Currency Converter</h3>
+            <p>API integrated currency converter made using JS</p>
+            <a
+              id="proBtn3"
+              href="https://project-curr-conv.netlify.app/"
+              target="_blank"
+              class="btn disabled"
+              >View Live</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+      <h2>Contact Me</h2>
+      <p>Feel free to reach out to me on any of the platforms below!</p>
+
+      <div class="social-links">
+        <a
+          href="https://www.instagram.com/udayveer_ubhi/"
+          target="_blank"
+          aria-label="Instagram"
+        >
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="mailto:uvsu525@gmail.com" target="_blank" aria-label="Email">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a
+          href="https://wa.me/8146622525"
+          target="_blank"
+          aria-label="WhatsApp"
+        >
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
+      <br />
+
+      <div class="contact-details">
+        <span> Phone: <span style="color: #38bdf8">+91 8146622525</span></span>
+        <br />
+        <span
+          >Email: <span style="color: #38bdf8">uvsu525@gmail.com</span></span
+        >
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <div class="footer-content">
+        <p>© 2024 Udayveer Singh. All Rights Reserved.</p>
+        <div class="footer-social">
+          <a href="https://instagram.com" target="_blank" aria-label="Instagram"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a
+            href="mailto:youremail@gmail.com"
+            target="_blank"
+            aria-label="Email"
+            ><i class="fas fa-envelope"></i
+          ></a>
+          <a
+            href="https://wa.me/yourphonenumber"
+            target="_blank"
+            aria-label="WhatsApp"
+            ><i class="fab fa-whatsapp"></i
+          ></a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      function enableBtn(n) {
+        var projectBtn = document.getElementById(`proBtn${n}`);
+        projectBtn.classList.remove("disabled");
+      }
+
+      // Particles Background using Canvas API
+      const canvas = document.getElementById("heroCanvas");
+      const ctx = canvas.getContext("2d");
+      let particlesArray = [];
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        init();
+      });
+
+      class Particle {
+        constructor(x, y, size, color, velocity) {
+          this.x = x;
+          this.y = y;
+          this.size = size;
+          this.color = color;
+          this.velocity = velocity;
+        }
+
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.fill();
+        }
+
+        update() {
+          this.x += this.velocity.x;
+          this.y += this.velocity.y;
+
+          // Bounce particles off edges
+          if (this.x < 0 || this.x > canvas.width) this.velocity.x *= -1;
+          if (this.y < 0 || this.y > canvas.height) this.velocity.y *= -1;
+
+          this.draw();
+        }
+      }
+
+      function init() {
+        particlesArray = [];
+        const numberOfParticles = 100;
+
+        for (let i = 0; i < numberOfParticles; i++) {
+          const size = Math.random() * 3 + 1;
+          const x = Math.random() * canvas.width;
+          const y = Math.random() * canvas.height;
+          const color = "rgba(56, 189, 248, 0.7)";
+          const velocity = {
+            x: Math.random() * 2 - 1,
+            y: Math.random() * 2 - 1,
+          };
+          particlesArray.push(new Particle(x, y, size, color, velocity));
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particlesArray.forEach((particle) => particle.update());
+        requestAnimationFrame(animate);
+      }
+
+      init();
+      animate();
+    </script>
+  </body>
+</html>
