@@ -277,7 +277,18 @@ h2 {
 
 /* Content Styling */
 .card-content {
-    z-index: 2;
+    position: relative;
+    z-index: 10; /* Higher than image */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Pushes text to bottom */
+    padding-bottom: 10px;
+}
+
+/* Adjust card icon to stay at top if you want, or keep flow normal */
+.card-content .card-icon {
+    margin-bottom: auto; /* Pushes icon to top, text to bottom */
 }
 
 .card-icon {
@@ -323,12 +334,41 @@ h2 {
 /* --- VISUALS (CSS Art) --- */
 .card-visual {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    top: 0;      /* Changed from bottom:0 to cover full card */
+    left: 0;     /* Changed from right:0 to cover full card */
     width: 100%;
     height: 100%;
     z-index: 1;
-    pointer-events: none; /* Let clicks pass through */
+    overflow: hidden; /* Keeps the zoom inside the border */
+    border-radius: 18px; /* Matches card radius */
+}
+
+/* 2. Style the Image */
+.card-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Crucial: This crops the image to fill the box */
+    object-position: center top; /* Focuses on the top of your screenshot */
+    transition: transform 0.6s ease;
+    opacity: 0.6; /* Dim the image slightly by default */
+}
+
+/* 3. The Hover Effect (Zoom) */
+.bento-card:hover .card-visual img {
+    transform: scale(1.1); /* Smooth zoom in */
+    opacity: 0.4; /* Darken slightly more on hover to make text pop */
+}
+
+/* 4. The Gradient Overlay (Makes text readable) */
+.card-visual .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Fades from transparent at top to dark at bottom */
+    background: linear-gradient(to bottom, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0.95) 100%);
+    z-index: 2;
 }
 
 /* NOVA: Glowing Orb */
